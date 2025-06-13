@@ -1,9 +1,9 @@
 @extends('Admin.Layout')
-
+@auth 
 @section('content')
 <div class="p-6">
     <h1 class="text-2xl font-bold mb-4">Dashboard Overview</h1>
-    <p class="text-gray-600 mb-8">Welcome back! Here's what’s happening with your business today.</p>
+    <p class="text-gray-600 mb-8">Welcome back {{Auth::user()->name}}! Here's what’s happening with your business today.</p>
 
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
         <div class="bg-white p-4 rounded shadow transform transition duration-300 hover:scale-110">
@@ -66,3 +66,4 @@
     </div>
 </div>
 @endsection
+@endauth

@@ -11,9 +11,9 @@ Route::get('/', function () {
     return view('Login');
 });
 
-Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-    Route::resource('/produk', ProductController::class);
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+    Route::resource('/product', ProductController::class);
     Route::resource('/supplier', SuppliersController::class);
     Route::resource('/pengguna', UserController::class);
 });

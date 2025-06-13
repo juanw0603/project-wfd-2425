@@ -15,7 +15,7 @@
             <div class="p-6 font-bold text-xl border-b">MyApp Admin</div>
             <nav class="p-4 space-y-2 flex-1">
                 <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 rounded hover:bg-gray-200">Dashboard</a>
-                <a href="#" class="block px-4 py-2 rounded hover:bg-gray-200">Products</a>
+                <a href="{{ route('admin.product.index') }}" class="block px-4 py-2 rounded hover:bg-gray-200">Products</a>
                 <a href="#" class="block px-4 py-2 rounded hover:bg-gray-200">Sales</a>
                 <a href="#" class="block px-4 py-2 rounded hover:bg-gray-200">Purchases</a>
                 <a href="#" class="block px-4 py-2 rounded hover:bg-gray-200">Users</a>

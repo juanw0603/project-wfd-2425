@@ -15,8 +15,8 @@ class LoginController extends Controller
         if (Auth::check()) {
             return match (Auth::user()->role) {
                 'admin' => redirect()->route('admin.dashboard'),
-                'kasir' => redirect()->route('kasir.dashboard'),
-                'gudang' => redirect()->route('gudang.dashboard'),
+                'kasir' => redirect()->route('dashboard'),
+                'gudang' => redirect()->route('dashboard'),
                 default => abort(403),
             };
         }
