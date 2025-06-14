@@ -1,7 +1,7 @@
 @extends('Admin.Layout')
 @auth 
 @section('content')
-<div class="p-6">
+<div class="p-6 overflow">
     <h1 class="text-2xl font-bold mb-4">Dashboard Overview</h1>
     <p class="text-gray-600 mb-8">Welcome back {{Auth::user()->name}}! Here's what’s happening with your business today.</p>
 
@@ -38,7 +38,12 @@
                 </select>
             </div>
             <div class="h-48 flex items-center justify-center text-gray-400 text-sm border-2 border-dashed rounded">
-                Sales Chart Visualization
+                <svg class="w-8 h-8 mb-2" fill="none" stroke="currentColor" stroke-width="1.5"
+                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M9 17v-2a2 2 0 00-2-2H4m16 0h-3a2 2 0 00-2 2v2m4-10v2a2 2 0 01-2 2h-3a2 2 0 01-2-2V7m-4 0v2a2 2 0 01-2 2H4a2 2 0 01-2-2V7"></path>
+                </svg>
+                <span>Empty Sales</span>
             </div>
         </div>
 

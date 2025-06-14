@@ -6,7 +6,7 @@
     <h1 class="text-2xl font-bold">Daftar Produk</h1>
 
     <a href="{{ route('admin.product.create') }}" class="bg-black hover:bg-gray-800 text-white px-4 py-2 rounded shadow">
-        Tambah
+        + Tambah product
     </a>
 </div>
 
@@ -20,7 +20,7 @@
                     <th class="px-4 py-2 text-left font-semibold text-gray-600">Kategori</th>
                     <th class="px-4 py-2 text-left font-semibold text-gray-600">Harga</th>
                     <th class="px-4 py-2 text-left font-semibold text-gray-600">Stok</th>
-                    <th class="px-4 py-2 text-left font-semibold text-gray-600">Aksi</th>
+                    <th class="px-4 py-2 text-left font-semibold text-gray-600  ">Aksi</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">

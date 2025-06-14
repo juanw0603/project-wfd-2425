@@ -13,7 +13,8 @@ class SuppliersController extends Controller
      */
     public function index()
     {
-        //
+        $suppliers = suppliers::all();
+        return view('Admin.supplier.ViewSupplier', compact('suppliers'));
     }
 
     /**

@@ -10,15 +10,15 @@
 
     <div class="flex min-h-screen">
         <!-- Sidebar -->
-        <aside class="w-64 bg-white shadow-lg flex flex-col h-screen">
+        <aside class="w-64 bg-gray-600 shadow-lg flex flex-col h-screen">
             <!-- Top menu -->
-            <div class="p-6 font-bold text-xl border-b">MyApp Admin</div>
+            <div class="p-6 font-bold text-xl border-b">Admin Dashboard</div>
             <nav class="p-4 space-y-2 flex-1">
                 <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 rounded hover:bg-gray-200">Dashboard</a>
                 <a href="{{ route('admin.product.index') }}" class="block px-4 py-2 rounded hover:bg-gray-200">Products</a>
-                <a href="#" class="block px-4 py-2 rounded hover:bg-gray-200">Sales</a>
-                <a href="#" class="block px-4 py-2 rounded hover:bg-gray-200">Purchases</a>
+                <a href="{{ route('admin.supplier.index') }}" class="block px-4 py-2 rounded hover:bg-gray-200">Suppliers</a>
                 <a href="#" class="block px-4 py-2 rounded hover:bg-gray-200">Users</a>
+                <a href="#" class="block px-4 py-2 rounded hover:bg-gray-200">Laporan</a>
             </nav>
 
             <!-- Logout button di bawah -->
@@ -32,7 +32,7 @@
 
 
     <!-- Main Content -->
-    <main class="flex-1 p-6 overflow">
+    <main class="flex-1 p-6 h-screen overflow-y-auto">
         
     @yield('content')
 
