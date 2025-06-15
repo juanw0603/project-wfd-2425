@@ -15,7 +15,7 @@ class LoginController extends Controller
         if (Auth::check()) {
             return match (Auth::user()->role) {
                 'admin' => redirect()->route('admin.dashboard'),
-                'kasir' => redirect()->route('dashboard'),
+                'kasir' => redirect()->route('kasir.transaksi'),
                 'gudang' => redirect()->route('dashboard'),
                 default => abort(403),
             };
@@ -35,7 +35,7 @@ class LoginController extends Controller
             // Redirect sesuai role
             return match (Auth::user()->role) {
                 'admin' => redirect()->route('admin.dashboard')->with('success','Berhasil login sebagai admin!!!'),
-                'kasir' => redirect()->route('testing')->with('success','Berhasil login sebagai kasir!!!'),
+                'kasir' => redirect()->route('kasir.transaksi')->with('success','Berhasil login sebagai kasir!!!'),
                 'gudang' => redirect()->route('testing')->with('success','Berhasil login sebagai gudang!!!'),
                 default => abort(403),
             };

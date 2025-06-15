@@ -32,3 +32,17 @@
         </form>
     </div>
 @endsection
+
+@section('script')
+    <script>
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+
+        document.getElementById('email').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault(); 
+                document.getElementById('password').focus(); // pindah ke password
+            }
+        });
+    </script>
+@endsection

@@ -13,7 +13,13 @@ class SalesController extends Controller
      */
     public function index()
     {
-        //
+        
+    }
+
+    
+    public function showSalesTransactions()
+    {
+        return view('Kasir.SalesTransactions');
     }
 
     /**
@@ -62,5 +68,10 @@ class SalesController extends Controller
     public function destroy(sales $sales)
     {
         //
+    }
+
+    public function salesReport()
+    {
+        
     }
 }
