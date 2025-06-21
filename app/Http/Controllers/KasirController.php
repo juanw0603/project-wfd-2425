@@ -23,7 +23,11 @@ class KasirController extends Controller
 
     public function prosesTransaksi(Request $request)
     {
-        // logika untuk menyimpan transaksi penjualan
-        // validasi + simpan ke tabel sales dan sale_items
+        $request->validate([
+            'items' => 'required|array|min:1',
+            'items.*.id' => 'required|exists:products,id',
+            'items.*.quantity' => 'required|integer|min:1',
+            'items.*.price' => 'required|numeric|min:0',
+        ]);
     }
 }

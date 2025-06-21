@@ -15,8 +15,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Faker::create('id_ID'); // Use Indonesian locale for names
-
+        $faker = Faker::create('id_ID');
         // Admin User
         DB::table('users')->insert([
             'name' => 'Admin Sembako',

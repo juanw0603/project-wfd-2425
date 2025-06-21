@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <title>Cashier Dashboard</title>
     @vite('resources/css/app.css')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="bg-gray-100 text-gray-800">
+
     <div class="flex min-h-screen">
         <!-- Sidebar -->
         <aside class="w-64 bg-white shadow p-4 flex flex-col h-screen">

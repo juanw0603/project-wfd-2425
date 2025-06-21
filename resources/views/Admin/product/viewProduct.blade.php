@@ -1,6 +1,9 @@
 @extends('Admin.Layout')
 
 @section('content')
+
+@include('partials.alert')
+
 <div class="p-6">
 <div class="flex justify-between items-center mb-4">
     <h1 class="text-2xl font-bold">Daftar Produk</h1>
