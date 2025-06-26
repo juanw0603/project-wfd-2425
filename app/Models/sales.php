@@ -16,9 +16,9 @@ class sales extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'name',
-        'contact',
-        'address',
+        'user_id',
+        'sale_date',
+        'total_price'
     ];
 
     public function user()

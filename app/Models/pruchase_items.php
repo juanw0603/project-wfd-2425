@@ -17,7 +17,6 @@ class pruchase_items extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'name',
         'purchase_id',
         'product_id',
         'quantity',

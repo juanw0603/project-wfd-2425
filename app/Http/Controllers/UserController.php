@@ -13,7 +13,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all()->where('role', '!=', 'admin');
+        $users = User::where('role', '!=', 'admin')->orderBy('id', 'asc')->get();
         return view('Admin.user.ViewUser', compact('users'));
     }
 
@@ -31,20 +31,20 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|unique:users,email',
-        'password' => 'required|string|min:6',
-        'role' => 'required|in:kasir,gudang',
-    ]);
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:6',
+            'role' => 'required|in:kasir,gudang',
+        ]);
 
-    User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => Hash::make($request->password),
-        'role' => $request->role,
-    ]);
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role,
+        ]);
 
-    return redirect()->back()->with('success', 'User berhasil ditambahkan.');
+        return redirect()->back()->with('success', 'User berhasil ditambahkan.');
     }
 
     /**
@@ -66,9 +66,17 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'role' => $request->role,
+        ]);
+
+        return redirect()->back()->with('success', 'User berhasil diupdate.');
     }
 
     /**

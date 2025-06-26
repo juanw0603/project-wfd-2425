@@ -15,7 +15,11 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [AdminController::class, 'dashboardPage'])->name('dashboard.page');
+    Route::get('/products', [AdminController::class, 'productsPage'])->name('product.page');
+    Route::get('/suppliers', [AdminController::class, 'suppliersPage'])->name('supplier.page');
+    Route::get('/users', [AdminController::class, 'usersPage'])->name('user.page');
+    
     Route::resource('/product', ProductController::class);
     Route::resource('/supplier', SuppliersController::class);
     Route::resource('/user', UserController::class);

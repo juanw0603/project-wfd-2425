@@ -11,18 +11,17 @@ class suppliers extends Model
     /** @use HasFactory<\Database\Factories\SuppliersFactory> */
     use HasFactory, Notifiable;
 
-        /**
+    /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
     protected $fillable = [
-        'category_id',
         'name',
-        'price',
-        'stock',
-        'minimal_stock',
+        'contact',
+        'address'
     ];
+    public $timestamps = false;
 
 
     public function purchases()

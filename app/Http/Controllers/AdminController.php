@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    public function index()
+    public function dashboardPage()
     {
         $totalProduk = product::count();
         $totalSupplier = suppliers::count();
@@ -33,5 +33,24 @@ class AdminController extends Controller
             'penjualan',
             'pembelian'
         ));
+    }
+
+
+    public function productsPage()
+    {
+        $products = product::all();
+        return view('Admin.product.ViewProduct', compact('products'));  
+    }
+
+    public function suppliersPage()
+    {
+        $suppliers = suppliers::all();
+        return view('Admin.supplier.ViewSupplier', compact('suppliers'));
+    }
+
+    public function usersPage()
+    {
+        $users = User::all()->where('role', '!=', 'admin');
+        return view('Admin.user.ViewUser', compact('users'));
     }
 }
