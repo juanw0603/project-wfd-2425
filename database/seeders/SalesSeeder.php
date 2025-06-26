@@ -35,8 +35,9 @@ class SalesSeeder extends Seeder
             $saleId = DB::table('sales')->insertGetId([
                 'user_id' => $userId,
                 'sale_date' => Carbon::instance($saleDate)->toDateString(),
-                'total_price' => 0, // Will be updated after items are added
-                // 'sales' table migration does not have timestamps()
+                'total_price' => 0, 
+                'created_at' => $saleDate, 
+                'updated_at' => $saleDate,
             ]);
 
             $totalSalePrice = 0;

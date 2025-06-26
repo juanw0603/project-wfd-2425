@@ -50,7 +50,7 @@ class AdminController extends Controller
 
     public function usersPage()
     {
-        $users = User::all()->where('role', '!=', 'admin');
+        $users = User::where('role', '!=', 'admin')->orderBy('id', 'asc')->get();
         return view('Admin.user.ViewUser', compact('users'));
     }
 }

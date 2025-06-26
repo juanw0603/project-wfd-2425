@@ -26,9 +26,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 });
 
 Route::middleware(['auth', 'role:kasir'])->prefix('kasir')->name('kasir.')->group(function () {
-    Route::get('/transaksi', [KasirController::class, 'transaksi'])->name('transaksi');
+    Route::get('/transaksi', [KasirController::class, 'transaksi'])->name('transaksi.page');
     Route::post('/transaksi', [KasirController::class, 'prosesTransaksi'])->name('transaksi.proses');
-    Route::get('/laporan-transaksi', [KasirController::class, 'LaporanTransaksi'])->name('laporan-transaksi');
+    Route::get('/laporan-transaksi', [KasirController::class, 'LaporanTransaksi'])->name('laporan-transaksi.page');
 });
 
 
