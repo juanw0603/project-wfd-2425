@@ -15,14 +15,27 @@ class AdminController extends Controller
 {
     public function dashboardPage()
     {
+        // Hitung total produk, supplier, dan pengguna non-admin
+        $totalProduk = Product::count();
+        $totalPengguna = User::where('role', '!=', 'admin')->count();
+
+        // Hitung total pembelian dan penjualan dari seluruh data
+        $totalPembelian = purchases::sum('total_price');
+        $totalPenjualan = sales::sum('total_price');
+
+        // Ambil range waktu dari query string, default 7 hari
         $range = request('range', 7);
         $fromDate = now()->subDays($range);
 
+        // Ambil data penjualan per hari dalam rentang waktu
         $sales = sales::selectRaw('DATE(sale_date) as date, SUM(total_price) as total')
             ->where('sale_date', '>=', $fromDate)
             ->groupBy('date')
             ->orderBy('date')
             ->get();
+
+        $salesDates = $sales->pluck('date');
+        $salesTotals = $sales->pluck('total');
 
         $purchases = purchases::selectRaw('DATE(purchase_date) as date, SUM(total_price) as total')
             ->where('purchase_date', '>=', $fromDate)
@@ -30,18 +43,21 @@ class AdminController extends Controller
             ->orderBy('date')
             ->get();
 
+        $purchaseDates = $purchases->pluck('date');
+        $purchaseTotals = $purchases->pluck('total');
+
+
         return view('Admin.dashboard', [
-            'totalPenjualan' => $sales->sum('total'),
-            'totalPembelian' => $purchases->sum('total'),
-            'totalProduk' => Product::count(),
-            'totalPengguna' => User::where('role', '!=', 'admin')->count(),
-            'salesDates' => $sales->pluck('date')->map(fn($d) => \Carbon\Carbon::parse($d)->format('d M')),
-            'salesTotals' => $sales->pluck('total'),
-            'purchaseDates' => $purchases->pluck('date')->map(fn($d) => \Carbon\Carbon::parse($d)->format('d M')),
-            'purchaseTotals' => $purchases->pluck('total'),
+            'totalPenjualan' => $totalPenjualan,
+            'totalPembelian' => $totalPembelian,
+            'totalProduk' => $totalProduk,
+            'totalPengguna' => $totalPengguna,
+            'salesDates' => $salesDates,
+            'salesTotals' => $salesTotals,
+            'purchaseDates' => $purchaseDates,
+            'purchaseTotals' => $purchaseTotals,
         ]);
     }
-
 
 
 
