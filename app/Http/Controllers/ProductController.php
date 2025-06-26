@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\product;
-use App\Http\Requests\StoreproductRequest;
-use App\Http\Requests\UpdateproductRequest;
+
+use Illuminate\Http\Request;
+
 
 class ProductController extends Controller
 {
@@ -20,17 +21,24 @@ class ProductController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
+    public function create() {}
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreproductRequest $request)
+    public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'category_id' => 'required|exists:categories,id',
+            'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+            'minimal_stock' => 'required|integer|min:0',
+        ]);
+
+        Product::create($validated);
+
+        return redirect()->route('admin.product.page')->with('success', 'Produk berhasil ditambahkan');
     }
 
     /**
@@ -52,16 +60,30 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateproductRequest $request, product $product)
+    public function update(Request $request, product $product)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'category_id' => 'required|exists:categories,id',
+            'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+            'minimal_stock' => 'required|integer|min:0',
+        ]);
+
+        $product->update($request->only('name', 'category_id', 'price', 'stock', 'minimal_stock'));
+
+        return redirect()->route('admin.product.page')->with('success', 'Produk berhasil diperbarui.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(product $product)
+    public function destroy(string $id)
     {
-        //
+        $product = product::findOrFail($id);
+
+        $product->delete();
+
+        return redirect()->back()->with('success', 'produk berhasil dihapus.');
     }
 }

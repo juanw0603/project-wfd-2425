@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name',225);
             $table->decimal('price',10,2);
             $table->integer('stock');
-            $table->integer('minimal_stock');
+            $table->integer('minimal_stock')->default(1);
             $table->timestamps();
         });
     }

@@ -2,50 +2,68 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\product;
 use App\Models\suppliers;
-use App\Models\User;
+use App\Models\categories;
+use App\Models\purchases;
+use App\Models\sales;
+use Database\Seeders\SaleItemSeeder;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
     public function dashboardPage()
     {
-        $totalProduk = product::count();
-        $totalSupplier = suppliers::count();
-        $totalPengguna = User::where('role', '!=', 'admin')->count();
+        $range = request('range', 7);
+        $fromDate = now()->subDays($range);
 
-        // Contoh data penjualan/pembelian real, nanti bisa pakai query lebih kompleks
-        $penjualan = [
-            'labels' => ['Jan', 'Feb', 'Mar', 'Apr'],
-            'data' => [1500000, 2000000, 1700000, 2200000], // bisa ganti jadi hasil query agregat
-        ];
+        $sales = sales::selectRaw('DATE(sale_date) as date, SUM(total_price) as total')
+            ->where('sale_date', '>=', $fromDate)
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get();
 
-        $pembelian = [
-            'labels' => ['Jan', 'Feb', 'Mar', 'Apr'],
-            'data' => [1200000, 1800000, 1600000, 2100000],
-        ];
+        $purchases = purchases::selectRaw('DATE(purchase_date) as date, SUM(total_price) as total')
+            ->where('purchase_date', '>=', $fromDate)
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get();
 
-        return view('admin.dashboard', compact(
-            'totalProduk',
-            'totalSupplier',
-            'totalPengguna',
-            'penjualan',
-            'pembelian'
-        ));
+        return view('Admin.dashboard', [
+            'totalPenjualan' => $sales->sum('total'),
+            'totalPembelian' => $purchases->sum('total'),
+            'totalProduk' => Product::count(),
+            'totalPengguna' => User::where('role', '!=', 'admin')->count(),
+            'salesDates' => $sales->pluck('date')->map(fn($d) => \Carbon\Carbon::parse($d)->format('d M')),
+            'salesTotals' => $sales->pluck('total'),
+            'purchaseDates' => $purchases->pluck('date')->map(fn($d) => \Carbon\Carbon::parse($d)->format('d M')),
+            'purchaseTotals' => $purchases->pluck('total'),
+        ]);
     }
 
 
-    public function productsPage()
+
+
+    public function productsPage(Request $request)
     {
-        $products = product::all();
-        return view('Admin.product.ViewProduct', compact('products'));  
+        $query = Product::with('category'); // gunakan relasi eager loading
+
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->category_id);
+        }
+
+        $products = $query->orderBy('created_at', 'desc')->get(); // produk terbaru di atas
+        $categories = categories::all();
+
+        return view('Admin.product.ViewProduct', compact('products', 'categories'));
     }
 
     public function suppliersPage()
     {
         $suppliers = suppliers::all();
-        return view('Admin.supplier.ViewSupplier', compact('suppliers'));
+
+        return view('Admin.supplier.ViewSupplier', compact('suppliers',));
     }
 
     public function usersPage()
