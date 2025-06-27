@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\pruchase_items;
-use App\Http\Requests\Storepruchase_itemsRequest;
-use App\Http\Requests\Updatepruchase_itemsRequest;
 
-class PruchaseItemsController extends Controller
+use App\Http\Requests\StorePurchaseItemRequest;
+use App\Http\Requests\UpdatePurchaseItemRe;
+use App\Models\PurchaseItem;
+use Illuminate\Http\Request;
+
+class PurchaseItemsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +29,7 @@ class PruchaseItemsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Storepruchase_itemsRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -35,7 +37,7 @@ class PruchaseItemsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(pruchase_items $pruchase_items)
+    public function show(PurchaseItem $PurchaseItem)
     {
         //
     }
@@ -43,7 +45,7 @@ class PruchaseItemsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(pruchase_items $pruchase_items)
+    public function edit(PurchaseItem $PurchaseItem)
     {
         //
     }
@@ -51,7 +53,7 @@ class PruchaseItemsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Updatepruchase_itemsRequest $request, pruchase_items $pruchase_items)
+    public function update(Request $request, PurchaseItem $PurchaseItem)
     {
         //
     }
@@ -59,7 +61,7 @@ class PruchaseItemsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(pruchase_items $pruchase_items)
+    public function destroy(PurchaseItem $PurchaseItem)
     {
         //
     }

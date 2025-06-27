@@ -61,7 +61,7 @@ class PurchaseItemsSeeder extends Seeder
             }
 
             if (!empty($itemsForCurrentPurchase)) {
-                DB::table('pruchase_items')->insert($itemsForCurrentPurchase); 
+                DB::table('purchase_items')->insert($itemsForCurrentPurchase); 
                 DB::table('purchases')->where('id', $purchase->id)->update(['total_price' => $totalPurchasePrice]);
             }
         }

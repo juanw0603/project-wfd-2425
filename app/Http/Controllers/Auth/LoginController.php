@@ -16,7 +16,7 @@ class LoginController extends Controller
             return match (Auth::user()->role) {
                 'admin' => redirect()->route('admin.dashboard.page'),
                 'kasir' => redirect()->route('kasir.transaksi.page'),
-                'gudang' => redirect()->route('dashboard'),
+                'gudang' => redirect()->route('gudang.purchase.page'),
                 default => abort(403),
             };
         }
@@ -36,7 +36,7 @@ class LoginController extends Controller
             return match (Auth::user()->role) {
                 'admin' => redirect()->route('admin.dashboard.page')->with('success','Berhasil login sebagai admin!!!'),
                 'kasir' => redirect()->route('kasir.transaksi.page')->with('success','Berhasil login sebagai kasir!!!'),
-                'gudang' => redirect()->route('testing')->with('success','Berhasil login sebagai gudang!!!'),
+                'gudang' => redirect()->route('gudang.purchase.page')->with('success','Berhasil login sebagai gudang!!!'),
                 default => abort(403),
             };
         }

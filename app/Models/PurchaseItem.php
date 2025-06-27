@@ -1,21 +1,15 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
 
-class pruchase_items extends Model
+class PurchaseItem extends Model
 {
-    /** @use HasFactory<\Database\Factories\PruchaseItemsFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
+    protected $table = 'purchase_items'; // ini eksplisit, opsional tapi aman
+
     protected $fillable = [
         'purchase_id',
         'product_id',
@@ -24,12 +18,6 @@ class pruchase_items extends Model
         'subtotal'
     ];
 
-    
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'created_at',
         'updated_at',
@@ -37,7 +25,7 @@ class pruchase_items extends Model
 
     public function purchase()
     {
-        return $this->belongsTo(purchases::class);
+        return $this->belongsTo(purchase::class);
     }
 
     public function product()

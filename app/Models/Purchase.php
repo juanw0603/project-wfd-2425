@@ -1,20 +1,13 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class purchases extends Model
+class Purchase extends Model
 {
-    /** @use HasFactory<\Database\Factories\PurchasesFactory> */
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'user_id',
         'supplier_id',
@@ -22,11 +15,6 @@ class purchases extends Model
         'total_price'
     ];
 
-        /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'created_at',
         'updated_at',
@@ -42,8 +30,8 @@ class purchases extends Model
         return $this->belongsTo(suppliers::class);
     }
 
-    public function purchaseItems()
+    public function items()
     {
-        return $this->hasMany(pruchase_items::class);
+        return $this->hasMany(PurchaseItem::class);
     }
 }

@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\product;
 use App\Models\suppliers;
 use App\Models\categories;
+use App\Models\Purchase;
 use App\Models\purchases;
 use App\Models\sales;
 use Database\Seeders\SaleItemSeeder;
@@ -20,7 +21,7 @@ class AdminController extends Controller
         $totalPengguna = User::where('role', '!=', 'admin')->count();
 
         // Hitung total pembelian dan penjualan dari seluruh data
-        $totalPembelian = purchases::sum('total_price');
+        $totalPembelian = Purchase::sum('total_price');
         $totalPenjualan = sales::sum('total_price');
 
         // Ambil range waktu dari query string, default 7 hari
@@ -37,7 +38,7 @@ class AdminController extends Controller
         $salesDates = $sales->pluck('date');
         $salesTotals = $sales->pluck('total');
 
-        $purchases = purchases::selectRaw('DATE(purchase_date) as date, SUM(total_price) as total')
+        $purchases = Purchase::selectRaw('DATE(purchase_date) as date, SUM(total_price) as total')
             ->where('purchase_date', '>=', $fromDate)
             ->groupBy('date')
             ->orderBy('date')

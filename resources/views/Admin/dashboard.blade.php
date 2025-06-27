@@ -1,6 +1,7 @@
 @extends('Admin.Layout')
 
 @section('content')
+    @include('partials.alert')
     <div class="p-6 overflow">
         <h1 class="text-2xl font-bold mb-4">Dashboard Overview</h1>
         <p class="text-gray-600 mb-8">Welcome back {{ Auth::user()->name }}! Here's what’s happening with your business
@@ -83,8 +84,6 @@
     </div>
 
     {{-- Debug --}}
-<pre>purchaseDates: {{ json_encode($purchaseDates) }}</pre>
-<pre>purchaseTotals: {{ json_encode($purchaseTotals) }}</pre>
 @endsection
 
 

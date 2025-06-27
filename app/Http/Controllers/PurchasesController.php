@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\purchases;
-use App\Http\Requests\StorepurchasesRequest;
-use App\Http\Requests\UpdatepurchasesRequest;
+use App\Http\Requests\StorePurchaseRequest;
+use App\Http\Requests\UpdatePurchaseRequest;
+use App\Models\Purchase;
+use Illuminate\Http\Request;
 
-class PurchasesController extends Controller
+class PurchaseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +28,7 @@ class PurchasesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorepurchasesRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -35,7 +36,7 @@ class PurchasesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(purchases $purchases)
+    public function show(Purchase $Purchase)
     {
         //
     }
@@ -43,7 +44,7 @@ class PurchasesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(purchases $purchases)
+    public function edit(Purchase $Purchase)
     {
         //
     }
@@ -51,7 +52,7 @@ class PurchasesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatepurchasesRequest $request, purchases $purchases)
+    public function update(Purchase $request, Purchase $Purchase)
     {
         //
     }
@@ -59,7 +60,7 @@ class PurchasesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(purchases $purchases)
+    public function destroy(Purchase $Purchase)
     {
         //
     }
