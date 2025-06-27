@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('supplier_id')->references('id')->on('suppliers')->onDelete('cascade');
-            $table->date('purchase_date'); 
+            $table->dateTime('purchase_date'); 
             $table->decimal('total_price',10,2);
             $table->timestamps();
         });

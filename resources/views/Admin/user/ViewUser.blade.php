@@ -147,7 +147,7 @@
             </form>
         </div>
     </div>
-    
+        @include('partials.errorAlert')
 @endsection
 
 @section('script')

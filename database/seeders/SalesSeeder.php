@@ -27,16 +27,16 @@ class SalesSeeder extends Seeder
             return;
         }
 
-        for ($i = 0; $i < 30; $i++) { // Create 30 sales
+        for ($i = 0; $i < 30; $i++) {
             $saleDate = $faker->dateTimeBetween('-1 year', 'now');
             $userId = $faker->randomElement($userIds);
 
             // Create Sale record
             $saleId = DB::table('sales')->insertGetId([
                 'user_id' => $userId,
-                'sale_date' => Carbon::instance($saleDate)->toDateString(),
-                'total_price' => 0, 
-                'created_at' => $saleDate, 
+                'sale_date' => $saleDate, // Gunakan full datetime
+                'total_price' => 0,
+                'created_at' => $saleDate,
                 'updated_at' => $saleDate,
             ]);
 
@@ -59,12 +59,16 @@ class SalesSeeder extends Seeder
                     'quantity' => $quantity,
                     'price_per_unit' => $pricePerUnit,
                     'subtotal' => $subtotal,
-                    'created_at' => $saleDate, // sale_items table has timestamps
+                    'created_at' => $saleDate,
                     'updated_at' => $saleDate,
                 ]);
+
                 $totalSalePrice += $subtotal;
             }
-            DB::table('sales')->where('id', $saleId)->update(['total_price' => $totalSalePrice]);
+
+            DB::table('sales')->where('id', $saleId)->update([
+                'total_price' => $totalSalePrice
+            ]);
         }
     }
 }

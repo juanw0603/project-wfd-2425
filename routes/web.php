@@ -20,6 +20,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/products', [AdminController::class, 'productsPage'])->name('product.page');
     Route::get('/suppliers', [AdminController::class, 'suppliersPage'])->name('supplier.page');
     Route::get('/users', [AdminController::class, 'usersPage'])->name('user.page');
+    Route::get('/laporan',[AdminController::class, 'laporanPage'])->name('laporan.page');
     
     Route::resource('/product', ProductController::class);
     Route::resource('/supplier', SuppliersController::class);

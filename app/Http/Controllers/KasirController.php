@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity_logs;
 use App\Models\User;
 use App\Models\sales;
 use App\Models\product;
@@ -108,6 +109,13 @@ class KasirController extends Controller
                 $item['sale_id'] = $sale->id;
                 sale_items::create($item);
             }
+
+            Activity_logs::create([
+                'user_id'    => Auth::id(),
+                'activity_type'        => 'purchase',
+                'description' => 'User "' . Auth::user()->name . '" menambahkan pembelian produk ' . $product->name,
+
+            ]);
 
             DB::commit();
 

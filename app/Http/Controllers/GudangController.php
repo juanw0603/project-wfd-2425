@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity_logs;
 use App\Models\product;
 use App\Models\Purchase;
 use App\Models\purchases;
@@ -40,7 +41,46 @@ class GudangController extends Controller
         ));
     }
 
-    public function laporanPage() {}
+    public function laporanPage(Request $request)
+    {
+        $start = $request->input('start_date');
+        $end = $request->input('end_date');
+        $supplierId = $request->input('supplier_id');
+
+        // Query dasar
+        $baseQuery = Purchase::query();
+
+        if ($start) {
+            $baseQuery->whereDate('purchase_date', '>=', $start);
+        }
+        if ($end) {
+            $baseQuery->whereDate('purchase_date', '<=', $end);
+        }
+        if ($supplierId) {
+            $baseQuery->where('supplier_id', $supplierId);
+        }
+
+        // Copy query untuk summary (tanpa pagination)
+        $summaryQuery = clone $baseQuery;
+
+        // Hitung summary
+        $summary = [
+            'total' => $summaryQuery->sum('total_price'),
+            'count' => $summaryQuery->count(),
+            'average' => $summaryQuery->average('total_price') ?? 0,
+            'active_suppliers' => $summaryQuery->distinct('supplier_id')->count('supplier_id'),
+        ];
+
+        // Ambil data transaksi untuk tabel (pakai pagination)
+        $purchases = $baseQuery->with(['supplier', 'items'])->latest()->paginate(10);
+
+        $suppliers = suppliers::all();
+
+        return view('gudang.laporanPurchase', compact('purchases', 'summary', 'suppliers'));
+    }
+
+
+
 
     public function prosesPurchase(Request $request)
     {
@@ -76,6 +116,13 @@ class GudangController extends Controller
             // Tambahkan ke stok produk
             $product->stock += $request->quantity;
             $product->save();
+
+            Activity_logs::create([
+                'user_id' => Auth::id(),
+                'activity_type' => 'purchase',
+                'description' => 'User "' . Auth::user()->name . '" melakukan pembelian produk "' . $product->name . '" sebanyak ' . $request->quantity,
+
+            ]);
 
             DB::commit();
 

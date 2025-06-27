@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sales', function (Blueprint $table) {
+        Schema::create('activity_logs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->dateTime('sale_date');
-            $table->decimal('total_price', 10, 2);
+            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete(); // user yang melakukan
+            $table->string('activity_type');  // contoh: purchase, sale, login, logout
+            $table->text('description');      // contoh: 'Membuat pembelian dari Supplier A'
             $table->timestamps();
-
         });
     }
 
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sales');
+        Schema::dropIfExists('activity_logs');
     }
 };

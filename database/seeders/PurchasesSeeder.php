@@ -40,7 +40,7 @@ class PurchasesSeeder extends Seeder
             $purchaseId = DB::table('purchases')->insertGetId([
                 'user_id' => $userId,
                 'supplier_id' => $supplierId,
-                'purchase_date' => Carbon::instance($purchaseDate)->toDateString(),
+                'purchase_date' => $purchaseDate,
                 'total_price' => 0, // Akan diupdate oleh PurchaseItemsSeeder
                 'created_at' => $purchaseDate, // purchases table has timestamps
                 'updated_at' => $purchaseDate,

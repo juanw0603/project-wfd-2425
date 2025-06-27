@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity_logs;
 use App\Models\User;
 use App\Models\product;
 use App\Models\suppliers;
 use App\Models\categories;
 use App\Models\Purchase;
+use App\Models\PurchaseItem;
 use App\Models\purchases;
+use App\Models\sale_items;
 use App\Models\sales;
 use Database\Seeders\SaleItemSeeder;
 use Illuminate\Http\Request;
@@ -16,6 +19,9 @@ class AdminController extends Controller
 {
     public function dashboardPage()
     {
+        $recentActivities = Activity_logs::with('user')->latest()->take(5)->get();
+
+
         // Hitung total produk, supplier, dan pengguna non-admin
         $totalProduk = Product::count();
         $totalPengguna = User::where('role', '!=', 'admin')->count();
@@ -57,6 +63,7 @@ class AdminController extends Controller
             'salesTotals' => $salesTotals,
             'purchaseDates' => $purchaseDates,
             'purchaseTotals' => $purchaseTotals,
+            'recentActivities' => $recentActivities,
         ]);
     }
 
@@ -87,5 +94,40 @@ class AdminController extends Controller
     {
         $users = User::where('role', '!=', 'admin')->orderBy('id', 'asc')->get();
         return view('Admin.user.ViewUser', compact('users'));
+    }
+
+
+    public function laporanPage(Request $request)
+    {
+        $tanggal = $request->input('tanggal', today());
+
+        // Barang Masuk (pembelian)
+        $barangMasuk = PurchaseItem::with(['product', 'purchase.supplier'])
+            ->whereHas('purchase', function ($q) use ($tanggal) {
+                $q->whereDate('purchase_date', $tanggal);
+            })->get();
+
+        // Barang Keluar (penjualan)
+        $barangKeluar = sale_items::with(['product', 'sale.user'])
+            ->whereHas('sale', function ($q) use ($tanggal) {
+                $q->whereDate('sale_date', $tanggal);
+            })->get();
+
+        // Stok Opname
+        $stok = \App\Models\Product::all();
+
+        // Laporan Keuangan
+        $totalPembelian = Purchase::whereDate('purchase_date', $tanggal)->sum('total_price');
+        $totalPenjualan = sales::whereDate('sale_date', $tanggal)->sum('total_price');
+
+        return view('admin.laporan', [
+            'tanggal' => $tanggal,
+            'barangMasuk' => $barangMasuk,
+            'barangKeluar' => $barangKeluar,
+            'stok' => $stok,
+            'totalPembelian' => $totalPembelian,
+            'totalPenjualan' => $totalPenjualan,
+            'selisih' => $totalPenjualan - $totalPembelian,
+        ]);
     }
 }

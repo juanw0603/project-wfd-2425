@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use id;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\Activity_logs;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpKernel\Attribute\WithLogLevel;
 
@@ -32,11 +34,17 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
+            Activity_logs::create([
+                'user_id'    => Auth::user()->id,
+                'activity_type'        => 'login',
+                'description' => 'User "' . Auth::user()->name . '" berhasil login.',
+                
+            ]);
             // Redirect sesuai role
             return match (Auth::user()->role) {
-                'admin' => redirect()->route('admin.dashboard.page')->with('success','Berhasil login sebagai admin!!!'),
-                'kasir' => redirect()->route('kasir.transaksi.page')->with('success','Berhasil login sebagai kasir!!!'),
-                'gudang' => redirect()->route('gudang.purchase.page')->with('success','Berhasil login sebagai gudang!!!'),
+                'admin' => redirect()->route('admin.dashboard.page')->with('success', 'Berhasil login sebagai admin!!!'),
+                'kasir' => redirect()->route('kasir.transaksi.page')->with('success', 'Berhasil login sebagai kasir!!!'),
+                'gudang' => redirect()->route('gudang.purchase.page')->with('success', 'Berhasil login sebagai gudang!!!'),
                 default => abort(403),
             };
         }

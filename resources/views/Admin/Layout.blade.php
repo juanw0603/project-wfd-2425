@@ -26,8 +26,10 @@
                     class="block px-4 py-2 rounded hover:bg-slate-300">Products</a>
                 <a href="{{ route('admin.supplier.page') }}"
                     class="block px-4 py-2 rounded hover:bg-slate-300">Suppliers</a>
-                <a href="{{ route('admin.user.page') }}" class="block px-4 py-2 rounded hover:bg-slate-300">Users</a>
-                <a href="#" class="block px-4 py-2 rounded hover:bg-slate-300">Laporan</a>
+                <a href="{{ route('admin.user.page') }}" 
+                    class="block px-4 py-2 rounded hover:bg-slate-300">Users</a>
+                <a href=" {{ route('admin.laporan.page') }}" 
+                    class="block px-4 py-2 rounded hover:bg-slate-300">Laporan</a>
             </nav>
 
             <!-- Logout button di bawah -->

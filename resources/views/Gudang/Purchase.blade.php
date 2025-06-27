@@ -136,6 +136,8 @@
             </div>
         </div>
     </div>
+
+    @include('partials.errorAlert')
 @endsection
 
 

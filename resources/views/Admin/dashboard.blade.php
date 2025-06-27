@@ -75,10 +75,25 @@
 
         <div class="bg-white p-6 rounded shadow">
             <h2 class="text-lg font-semibold mb-4">Recent Activity</h2>
+
             <ul class="text-sm text-gray-600 space-y-2">
-                <li>🛒 New order <span class="font-semibold">#12345</span> received</li>
-                <li>📦 Stock updated for product <span class="font-semibold">"Pens"</span></li>
-                <li>👤 User <span class="font-semibold">"kasir1"</span> logged in</li>
+                @forelse ($recentActivities as $activity)
+                    <li>
+                        @if ($activity->type === 'login')
+                            👤 <span class="font-semibold">{{ $activity->user->name ?? 'Unknown' }}</span> logged in
+                        @elseif ($activity->type === 'pembelian')
+                            📦 <span class="font-semibold">{{ $activity->user->name ?? 'Unknown' }}</span> added a purchase
+                        @elseif ($activity->type === 'penjualan')
+                            🛒 <span class="font-semibold">{{ $activity->user->name ?? 'Unknown' }}</span> made a sale
+                        @else
+                            📄 {{ $activity->description }}
+                        @endif
+                        <br>
+                        <span class="text-xs text-gray-400">{{ $activity->created_at->diffForHumans() }}</span>
+                    </li>
+                @empty
+                    <li class="text-gray-400">No recent activity found.</li>
+                @endforelse
             </ul>
         </div>
     </div>
