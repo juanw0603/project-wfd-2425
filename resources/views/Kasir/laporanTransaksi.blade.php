@@ -59,8 +59,7 @@
                     <th class="px-4 py-2">Kasir</th>
                     <th class="px-4 py-2">Pelanggan</th>
                     <th class="px-4 py-2">Total</th>
-                    <th class="px-4 py-2">Status</th>
-                    <th class="px-4 py-2">Aksi</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -72,12 +71,12 @@
                     <td class="px-4 py-2">{{ $sale->user->name }}</td>
                     <td class="px-4 py-2">{{ $sale->customer_name ?? '-' }}</td>
                     <td class="px-4 py-2 text-green-700">Rp {{ number_format($sale->total_price, 0, ',', '.') }}</td>
-                    <td class="px-4 py-2">
+                    {{-- <td class="px-4 py-2">
                         <span class="text-green-600 font-medium">Selesai</span>
                     </td>
                     <td class="px-4 py-2">
                         <a href="#" class="text-blue-600 hover:underline">Detail</a>
-                    </td>
+                    </td> --}}
                 </tr>
                 @empty
                 <tr>
