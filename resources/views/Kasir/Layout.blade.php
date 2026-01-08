@@ -12,13 +12,39 @@
 
 <body class="bg-gray-100 text-gray-800">
 
+    @if (session()->has('error'))
+        <script>
+            Swal.fire({
+                heightAuto: false,
+                icon: 'error',
+                title: 'Oops...',
+                text: '{{ session('error') }}',
+                confirmButtonColor: "#3085d6",
+            })
+        </script>
+    @endif
+
+    @if (session()->has('success'))
+        <script>
+            Swal.fire({
+                heightAuto: false,
+                icon: 'success',
+                title: 'Success',
+                text: '{{ session('success') }}',
+                confirmButtonColor: "#3085d6",
+            })
+        </script>
+    @endif
+
     <div class="flex min-h-screen">
         <!-- Sidebar -->
         <aside class="w-64 bg-white shadow p-4 flex flex-col h-screen">
             <h2 class="text-lg font-semibold mb-4">Cashier Dashboard</h2>
             <nav class="space-y-2">
-                <a href="{{ route('kasir.transaksi.page') }}" class="block py-2 px-3 rounded hover:bg-gray-200">Sales Transactions</a>
-                <a href="{{ route('kasir.laporan-transaksi.page') }}" class="block py-2 px-3 rounded hover:bg-gray-200">Sales Reports</a>
+                <a href="{{ route('kasir.transaksi.page') }}" class="block py-2 px-3 rounded hover:bg-gray-200">Sales
+                    Transactions</a>
+                <a href="{{ route('kasir.laporan-transaksi.page') }}"
+                    class="block py-2 px-3 rounded hover:bg-gray-200">Sales Reports</a>
             </nav>
 
             <!-- Logout button di bawah -->

@@ -10,14 +10,25 @@ use Illuminate\Support\Facades\Mail;
 
 class ForgotPasswordController extends Controller
 {
-        public function showLinkRequestForm()
+    public function showLinkRequestForm()
     {
         return view('auth.forgot-password');
     }
 
     public function sendResetLinkEmail(Request $request)
     {
-        $request->validate(['email' => 'required|email|exists:users,email']);
+        $request->validate([
+            'email' => 'required|email'
+        ]);
+
+        $user = DB::table('users')->where('email', $request->email)->first();
+
+        if (!$user) {
+            return back()->with(
+                'error',
+                'Email anda tidak terdaftar.'
+            );
+        }
 
         $token = Str::random(64);
 
@@ -32,9 +43,11 @@ class ForgotPasswordController extends Controller
 
         $resetUrl = url('/password/reset/' . $token . '?email=' . urlencode($request->email));
 
-        Mail::raw("Klik link berikut untuk mereset password Anda: $resetUrl", function ($message) use ($request) {
-            $message->to($request->email)->subject('Reset Password');
+        Mail::send('emails.reset-password', ['url' => $resetUrl], function ($message) use ($request) {
+            $message->to($request->email)
+                ->subject('Reset Password');
         });
+
 
         return back()->with('success', 'Link reset password telah dikirim ke email Anda.');
     }

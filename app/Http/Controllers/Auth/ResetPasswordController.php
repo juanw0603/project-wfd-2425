@@ -26,10 +26,11 @@ class ResetPasswordController extends Controller
             'password' => 'required|confirmed|min:6',
         ]);
 
-        $check = DB::table('password_resets')->where([
-            ['email', $request->email],
-            ['token', $request->token],
-        ])->first();
+        $check = DB::table('password_resets')
+            ->where('email', $request->email)
+            ->where('token', $request->token)
+            ->where('created_at', '>=', now()->subMinutes(60))
+            ->first();
 
         if (!$check) {
             return back()->with('error', 'Token tidak valid atau kadaluarsa.');
